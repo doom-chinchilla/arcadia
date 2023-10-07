@@ -21,7 +21,6 @@ To run ARCADIA, you will need:
     
     ```
     pip install pygame
-    
     ```
     
 3. Launch the simulator by running the ARCADIA executable.
@@ -39,6 +38,11 @@ To run ARCADIA, you will need:
 - Pac-Man
 - Space Invaders
 - Frogger
+- Minesweeper
+- ConnectFour
+- Tic-Tac-Toe
+- Tetris
+- Hangman
 - AstroBunny (new title)
 - Catsylvania (new title) 
 
