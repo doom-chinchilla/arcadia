@@ -32,6 +32,17 @@ To run ARCADIA, you will need:
 2. Use the designated controls to play the game.
 3. Enjoy the classic arcade experience!
 
+## Games Supported 
+- Galaga
+- Snake
+- Pong
+- Pac-Man
+- Space Invaders
+- Frogger
+- AstroBunny (new title)
+- Catsylvania (new title) 
+
+
 ## Contributing
 
 Contributions to the Python Arcade Simulator are welcome! If you have any ideas for improvements or would like to add support for additional games, please submit a feature request.
