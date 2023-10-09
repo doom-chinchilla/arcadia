@@ -41,6 +41,7 @@ To run ARCADIA, you will need:
 - Minesweeper
 - ConnectFour
 - Tic-Tac-Toe
+- Space Pinball
 - Tetris
 - Hangman
 - AstroBunny (new title)
