@@ -1,10 +1,11 @@
-import math 
-import random 
-import pygame 
-import tkinter as tk 
+import math
+import random
+import tkinter as tk
 from tkinter import messagebox
+import pygame
 
-class cube(object):
+class Cube(object):
+    """Object to create the cubes on the game board."""
     rows = 20
     w = 500
 
@@ -15,11 +16,13 @@ class cube(object):
         self.color = color
 
     def move(self, dirnx, dirny):
+        """Handles the movement of the cubes on the board."""
         self.dirnx = dirnx
         self.dirny = dirny 
         self.pos=(self.pos[0] + self.dirnx, self.pos[1] + self.dirny)
 
     def draw(self, surface, eyes=False):
+        """Creates the initial design of the snake on the board."""
         dis = self.w // self.rows
         i = self.pos[0]
         j = self.pos[1]
@@ -28,24 +31,26 @@ class cube(object):
         if eyes:
             center = dis // 2
             radius = 3
-            circleMiddle = (i*dis+center-radius, j*dis+8)
-            circleMiddle2 = (i*dis + dis -radius*2, j*dis+8)
+            circle_middle = (i*dis+center-radius, j*dis+8)
+            circle_middle2 = (i*dis + dis -radius*2, j*dis+8)
 
-            pygame.draw.circle(surface, (0,0,0), circleMiddle, radius)
-            pygame.draw.circle(surface, (0,0,0), circleMiddle2, radius)
+            pygame.draw.circle(surface, (0,0,0), circle_middle, radius)
+            pygame.draw.circle(surface, (0,0,0), circle_middle2, radius)
 
-class snake(object):
+class Snake(object):
+    """Object to handle the movement/creation of the snake on the game board."""
     body = []
     turns = {}
 
     def __init__(self, color, pos):
         self.color = color
-        self.head = cube(pos)
+        self.head = Cube(pos)
         self.body.append(self.head)
         self.dirnx = 0
         self.dirny = 1
 
     def move(self):
+        """Function to handle the movement of the snake on the game board."""
         for event in pygame.event.get() :
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -94,55 +99,62 @@ class snake(object):
                     c.move(c.dirnx,c.dirny)
 
 
-    def addCube(self):
+    def add_cube(self):
+        """ Function to handle when the snake eats a snack 
+            and adds another cube to the body.
+        """
         tail = self.body[-1]
         dx, dy = tail.dirnx, tail.dirny
 
         if dx == 1 and dy == 0:
-            self.body.append(cube((tail.pos[0]-1, tail.pos[1])))
+            self.body.append(Cube((tail.pos[0]-1, tail.pos[1])))
         elif dx == -1 and dy == 0:
-            self.body.append(cube((tail.pos[0]+1, tail.pos[1])))
+            self.body.append(Cube((tail.pos[0]+1, tail.pos[1])))
         elif dx == 0 and dy == 1:
-            self.body.append(cube((tail.pos[0],tail.pos[1]-1)))
+            self.body.append(Cube((tail.pos[0],tail.pos[1]-1)))
         elif dx == 0 and dy == -1:
-            self.body.append(cube((tail.pos[0], tail.pos[1]+1)))
+            self.body.append(Cube((tail.pos[0], tail.pos[1]+1)))
 
         self.body[-1].dirnx = dx
         self.body[-1].dirny = dy
 
     def draw(self, surface):
+        """Function to handle the granular line drawing on the game board grid."""
         for i, c in enumerate(self.body):
-            if i == 0: 
+            if i == 0:
                 c.draw(surface, True)
-            else: 
+            else:
                 c.draw(surface)
 
-def drawGrid(w, rows, surface):
-    sizeBtwn = w // rows
+def draw_grid(w, rows, surface):
+    """Function to handle the drawing of the game board grid."""
+    size_btwn = w // rows
 
-    x = 0 
+    x = 0
     y = 0
 
     for l in range(rows):
-        x = x + sizeBtwn
-        y = y + sizeBtwn
+        x = x + size_btwn
+        y = y + size_btwn
 
         pygame.draw.line(surface, (255,255,255), (x,0), (x,w))
         pygame.draw.line(surface, (255,255,255), (0,y), (w,y))
 
-def redrawWindow(surface):
+def redraw_window(surface):
+    """Function to update the game window with new snacks/cubes."""
     global rows, width, s, snack
     surface.fill((0,0,0))
     s.draw(surface)
     snack.draw(surface)
-    drawGrid(width,rows,surface)
+    draw_grid(width,rows,surface)
     pygame.display.update()
 
-def randomSnack(rows, item):
+def random_snack(rows, item):
+    """Handles the random snack cube generation on the game board."""
     positions = item.body
 
-    while True: 
-        x = random.randrange(rows) 
+    while True:
+        x = random.randrange(rows)
         y = random.randrange(rows)
         if len(list(filter(lambda z:z.pos == (x,y), positions))) > 0:
             continue
@@ -152,13 +164,14 @@ def randomSnack(rows, item):
     return (x,y)
 
 def message_box(subject,content):
-    root = tk.Tk() 
+    """Handles the message box display."""
+    root = tk.Tk()
     root.attributes("-topmost",True)
-    root.withdraw() 
+    root.withdraw()
     messagebox.showinfo(subject,content)
-    try: 
+    try:
         root.destroy()
-    except: 
+    except:
         pass
 
 
@@ -167,8 +180,8 @@ def main():
     width = 500
     rows = 20
     win = pygame.display.set_mode((width,width))
-    s = snake((255,0,0), (10,10))
-    snack = cube(randomSnack(rows, s))
+    s = Snake((255,0,0), (10,10))
+    snack = Cube(random_snack(rows, s))
     flag = True
 
     clock = pygame.time.Clock()
@@ -178,18 +191,16 @@ def main():
         clock.tick(10)
         s.move()
         if s.body[0].pos == snack.pos:
-            s.addCube()
-            snack = cube(randomSnack(rows, s), color=(0,255,0))
+            s.add_cube()
+            snack = Cube(random_snack(rows, s), color=(0,255,0))
 
-        for x in range(len(s.body)): 
+        for x, s.body in enumerate(s.body):
             if s.body[x].pos in list(map(lambda z:z.pos,s.body[x+1:])): 
                 print("Score: ",len(s.body))
                 message_box("You Lost!","Play again?") 
                 s.reset((10,10))
                 break
 
-        redrawWindow(win)
-
-    pass
+        redraw_window(win)
 
 main()
