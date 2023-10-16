@@ -1,3 +1,4 @@
+"""Module providing geometric drawing tools."""
 import turtle
 
 WN = turtle.Screen()
@@ -51,23 +52,27 @@ pen.write("PlayerA: 0  PlayerB: 0", align="center", font=("Courier", 24, "normal
 
 # move the paddle functions
 def paddle_a_up():
+    """Handles the upward movement of Paddle A."""
     y = paddle_a.ycor()
-    y += 20 
+    y += 20
     paddle_a.sety(y)
 
 def paddle_a_down():
+    """Handles the downward movement of Paddle A."""
     y = paddle_a.ycor()
-    y -= 20 
+    y -= 20
     paddle_a.sety(y)
 
 def paddle_b_up():
+    """Handles the upward movement of Paddle B."""
     y = paddle_b.ycor()
-    y += 20 
+    y += 20
     paddle_a.sety(y)
 
 def paddle_b_down():
+    """Handles the downward movement of Paddle B."""
     y = paddle_b.ycor()
-    y -= 20 
+    y -= 20
     paddle_a.sety(y)
 
 # keyboard binding
@@ -85,7 +90,7 @@ while True:
     ball.setx(ball.xcor() + ball.dx)
     ball.sety(ball.ycor() + ball.dy)
 
-    # border checking 
+    # border checking
     if ball.ycor() > 290:
         ball.sety(290)
         ball.dy *= -1
@@ -99,16 +104,16 @@ while True:
         ball.dx *= -1
         SCORE_PA += 1
         pen.clear()
-        pen.write("PlayerA: {}  PlayerB: {}"\
-                  .format(SCORE_PA, SCORE_PB), align="center", font=("Courier", 24, "normal"))
+        pen.write(f"PlayerA: {SCORE_PA}  PlayerB: {SCORE_PB}",\
+                align="center", font=("Courier", 24, "normal"))
 
     if ball.xcor() < -390:
         ball.goto(0, 0)
         ball.dx *= -1
         SCORE_PB += 1
         pen.clear()
-        pen.write("PlayerA: {}  PlayerB: {}"\
-                  .format(SCORE_PA, SCORE_PB), align="center", font=("Courier", 24, "normal"))
+        pen.write(f"PlayerA: {SCORE_PA}  PlayerB: {SCORE_PB}",\
+                align="center", font=("Courier", 24, "normal"))
 
     #paddle and ball collisions
     if (ball.xcor() > 340 and ball.xcor() < 350) and \
