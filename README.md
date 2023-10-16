@@ -32,21 +32,22 @@ To run ARCADIA, you will need:
 3. Enjoy the classic arcade experience!
 
 ## Games Supported 
-- Galaga
 - Snake
 - Pong
-- Pac-Man
-- Space Invaders
-- Frogger
-- Minesweeper
+
+## Titles Planned
+- AstroBunny (new title)
+- Catsylvania (new title)
 - ConnectFour
 - Tic-Tac-Toe
 - Space Pinball
 - Tetris
 - Hangman
-- AstroBunny (new title)
-- Catsylvania (new title) 
-
+- Minesweeper
+- Pac-Man
+- Space Invaders
+- Frogger
+- Galaga
 
 ## Contributing
 
